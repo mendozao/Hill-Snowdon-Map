@@ -1,9 +1,9 @@
 <html>
 <head>
-  <title>A Partial Map of Black-led Black Liberation Organizing</title>
+  <title>Hill-Snowdon Foundation Map</title>
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width, initial-scale=1">
-  
+
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,700,800' rel='stylesheet' type='text/css'>
@@ -18,13 +18,13 @@
   <script type="text/javascript" src="js/tabletop.js"></script>
   <script type="text/javascript" src="js/sheetsee.js"></script>
   <script type="text/javascript" src="js/datamaps.js"></script>
-
+  <script type="text/javascript" src="js/highlight.js"></script>
 </head>
 <body>
 
 
   <nav class="navbar navbar-fixed-top">
-    <div class="container">
+    <!-- <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -38,101 +38,112 @@
         <ul class="nav navbar-nav">
           <li><a href="https://docs.google.com/forms/d/1M9XKhUYx9_WjhyY_D-EWTnDqNzg-fuZgkXfehYEnrTI/viewform"><i class="fa fa-plus"></i> Add your organization</a></li>
         </ul>
-      </div><!--/.nav-collapse -->
-    </div>
+      </div>
+    </div> -->
   </nav>
 
 
-  <div class="container main-content">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
-        <h1>A Partial Map of Black-led Black Liberation Organizing</h1><br>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-8">
-        <p class="sub-paragraph">This is a resource guide compiled by members, former staff, board and advisers, organizers, allies, partners, and funders of Resource Generation. Over 30 people submitted ideas, in alignment with the guidelines, also developed in partnership, of what constitutes Black-led organizing for Black liberation. It is not a comprehensive guide of all Black-Led, Black Liberation Organizing.</p>
-
-        <p class="sub-paragraph">
-          This is a part of Resource Generation's It Starts Today! campaign, moving $1,000,000 to Black-Led, Black Liberation Organizing between the day Michael Brown was killed and what would have been his 19th birthday - May 20th, 2015. We aim to support organizing that confronts and dismantles anti-Black violence, whether committed by private citizens or by law enforcement, throughout the US. Resource Generation is a national membership organization organizing young people with wealth toward the equitable distribution of land, wealth and power. Learn more about Resource Generation and learn how to become a member by visiting <a href="http://www.resourcegeneration.org">www.resourcegeneration.org</a>.
-        </p>
-        <div id="organization_map" class="map">
-        </div>
-      </div>
-      <div class="col-md-4">
-
-        <div class="row">
-          <a href="http://resourcegeneration.org/get-involved/become-a-member" target="_blank">Learn More about Resource Generation</a><br>
-          <a href="http://resourcegeneration.org/what-we-do/supporting-black-led-black-liberation" target="_blank">Learn more about Black-led Organizing</a><br>
-          <a href="https://docs.google.com/forms/d/1OnnioL8u7Jb2R_P3phzT7lCQK4PNrIbSBElGlanPb80/viewform" target="_blank">Have you made a contribution? If so, add your gift to our tally</a>
-          <hr>
-        </div>
-
-        <div class="row">
-          <input type="text" class="form-control" placeholder="Search here" id="search-bar">
-          <span class="example">
-            e.g. Action Now, Chicago, IL, Linda Evans
-          </span>
-          <hr>
-        </div>
-
-
+      <!-- Sidebar -->
+      <div class="col-sm-3 col-md-3 sidebar">
         <div class="row">
           <div class="organization-header">
-            <span id="organization-title">Organizations (<a href="https://docs.google.com/spreadsheets/d/1Xc29LTNtancnKHK3sBvShAfN-h0wwR5-EyWoXjWpOW4/edit?usp=sharing" target="_blank">View all in Spreadsheet</a>) </span>
-        
+            <span id="organization-title">Organizations (<a href="https://docs.google.com/spreadsheets/d/15-iDz53TuM_GwiU9jvekqpYgIlTd_kIMnVZqFKhEHCE/edit?usp=sharing" target="_blank">Spreadsheet</a>) </span>
             <span id="organization-count"></span>
           </div>
+          <br>
+        </div>
+
+        <div class="row">
+          <input type="text" class="form-control" placeholder="Search" id="search-bar">
+          <br>
+          Filter By Issue Categories
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="Criminalization" checked> Criminalization
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="Economic Justice/Employment" checked> Economic Justice/Employment
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="Education" checked> Education
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="Affordable Housing/Anti-Gentrification" checked> Affordable Housing/Anti-Gentrification
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="Civic Engagement" checked> Civic Engagement
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="Other" checked> Other
+            </label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="row">
           <div class="organization-information-container" id="all-organizations">
           </div>
         </div>
-
       </div>
-    </div>
 
-    <div class="row pie-charts">
-      <div class="col-md-6">
-        <h2>How far are we?</h2>
-        <div class="pie-chart" id="progress-pie-chart">
+      <!-- Main content -->
+      <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main">
+        <h1 class="page-header text-center">Hill-Snowdon Foundation Map</h1>
+        <div id="organization_map" class="map">
+        </div>
+
+        <div class="row bottom-information">
+          <div class="col-md-12">
+            <p class="copyright">
+              Copyright 2015. All rights reserved.
+            </p>
+
+            <p class="disclaimer">Disclaimer: The information provided in this list/map is for informational purposes only, and is not an endorsement of any of the groups or projects listed. We encourage you to do your own research, meet with, attend events, and call the people who are listed on the websites to learn more about an individual group or the issues they are addressing.</p>
+          </div>
         </div>
       </div>
 
-      <div class="col-md-6">
-        <h2>Where are funds going?</h2>
-        <div class="pie-chart" id="regional-pie-chart">
-        </div>
-      </div>
-    </div>
-
-    <div class="row bottom-information">
-      <div class="col-md-12">
-        <p class="copyright">
-          Copyright 2015. All rights reserved.
-        </p>
-
-        <p class="disclaimer">Disclaimer: The information provided in this list/map is for informational purposes only, and is not an endorsement of any of the groups or projects listed. We encourage you to do your own research, meet with, attend events, and call the people who are listed on the websites to learn more about an individual group or the issues they are addressing.</p>
-      </div>
     </div>
   </div>
 
   <script type="text/javascript">
 
     (function(){
+      'use strict'
+
       var organization_map,
         organizationData;
 
-      //Initialization 
+      //Initialization
       (function(){
         fetchSpreadsheetData();
         initMap();
         initSearchBox();
+        setCheckboxChangeHandler();
         setTagClickHandler();
       })();
 
       function fetchSpreadsheetData(){
-        var URL = "1Ok1ZAwGVPfNjoQJ3n4H2b5E50e_jbGEx6qjEJf9VlKk"
-        Tabletop.init( { key: URL, callback: didReceiveSpreadsheetData, simpleSheet: false } )
+        var URL = "15-iDz53TuM_GwiU9jvekqpYgIlTd_kIMnVZqFKhEHCE"
+        Tabletop.init( { key: URL, callback: didReceiveSpreadsheetData, simpleSheet: false, prettyColumnNames: true } )
       }
 
       function initMap(){
@@ -141,19 +152,19 @@
           element: document.getElementById('organization_map'),
           done: function(datamap) {
               datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
-                var found = filterOrganizations(geography.id, 'state');
+                var found = filterOrganizations(geography.id, 'State');
                 populateOrganizationsInList(found);
                 addBubbles(found);
               });
           },
           geographyConfig: {
-            highlightFillColor: '#5BB7D5',
+            highlightFillColor: '#CFCFCF',
             highlightBorderColor: '#FFFFFF',
             highlightBorderWidth: 2
           },
           fills: {
-            redColor: '#FF6868',
-            defaultFill: '#B5ADAF'
+            blueColor: '#00aaad',
+            defaultFill: '#ECECEC'
           }
         });
         organization_map.labels();
@@ -161,63 +172,29 @@
 
       function didReceiveSpreadsheetData(data) {
         organizationData = data.Organizations.elements;
-
         addBubbles(organizationData);
         populateOrganizationsInList(organizationData);
-        addPieCharts(data);
-      }
-
-      function addPieCharts(data) {
-        var progressPieChartData = [{
-            legendText: 'Pledged',
-            label: 'Pledged',
-            y: data.ProgressPieChart.elements[0].pledged
-          },
-          {
-            legendText: 'Left to go',
-            label: 'Left to go',
-            y: data.ProgressPieChart.elements[0].lefttogo
-          }];
-
-        var regionalPieChartData = [{
-            legendText: 'Southeast',
-            label: 'Southeast',
-            y: data.RegionsPieChart.elements[0].southeast
-          },
-          {
-            legendText: 'Midwest',
-            label: 'Midwest',
-            y: data.RegionsPieChart.elements[0].midwest
-          },
-          {
-            legendText: 'Northeast',
-            label: 'Northeast',
-            y: data.RegionsPieChart.elements[0].northeast
-          },
-          {
-            legendText: 'Southwest',
-            label: 'Southwest',
-            y: data.RegionsPieChart.elements[0].southwest
-          },
-          {
-            legendText: 'West Coast',
-            label: 'West Coast',
-            y: data.RegionsPieChart.elements[0].westcoast
-          },
-          {
-            legendText: 'Did Not Report',
-            label: 'Did Not Report',
-            y: data.RegionsPieChart.elements[0].didnotreport
-          }];
-
-        createPieChart(progressPieChartData, 'progress-pie-chart');
-        createPieChart(regionalPieChartData, 'regional-pie-chart');
       }
 
       function setTagClickHandler(){
         $(document).on('click','span.tag', function(){
           var tagName = $(this).html();
-          found = filterOrganizations(tagName,'tags');
+          var found = filterOrganizations(tagName,'Issue Categories');
+          populateOrganizationsInList(found);
+          addBubbles(found);
+        });
+      }
+
+      function setCheckboxChangeHandler(){
+        $('input[type="checkbox"]').change(function() {
+          var issueCategoriesToFilterBy = [];
+          $('input[type="checkbox"]').each(function(i, elem){
+            if(elem.checked) {
+              issueCategoriesToFilterBy.push(elem.value);
+            }
+          });
+
+          var found = filterOrganizations(issueCategoriesToFilterBy,'Issue Categories');
           populateOrganizationsInList(found);
           addBubbles(found);
         });
@@ -227,54 +204,78 @@
         var timeoutId,
             searchBar = $('#search-bar');
 
-        searchBar.on('keypress', function(){
+        //Keyup event vs keypress - keyup captures delete key
+        searchBar.on('keyup', function(){
           clearTimeout(timeoutId);
           timeoutId = setTimeout(function(){
             var searchString = searchBar.val(),
-              found = filterOrganizations(searchString, 'organization,primarycontact,city,state,mission');
-            populateOrganizationsInList(found);
-            addBubbles(found);
+              found = filterOrganizations(searchString, 'Organization Name,City,State,Contact Name,Contact Email Address,Organization Website,Current Campaigns,Recent Accomplishments,Issue Categories');
+            populateOrganizationsInList(found, function(){
+              $('#all-organizations .label-content').highlight(searchString);
+              addBubbles(found);
+            });
           }, 500);
         });
       }
 
+      /**
+       * SearchString can be a string or an array of strings
+       * Columns is a comma seperated list of columns that we want the search to include
+       */
       function filterOrganizations(searchString, columns){
+        var searchStringArr = [];
+
+        if(Object.prototype.toString.call(searchString) === '[object String]'){
+          searchStringArr.push(searchString);
+        }else if(Object.prototype.toString.call(searchString) === '[object Array]'){
+          searchStringArr = searchString;
+        }else {
+          throw new Error('filterOrganizations expects either a string or an array');
+        }
+
         //Searching only a single column
         if(columns.indexOf(',') === -1) {
           return $.grep(organizationData, function(org) {
-            return org[columns].toLowerCase().indexOf(searchString.toLowerCase()) !== -1;
+            for(var i = 0; i < searchStringArr.length; i = i + 1) {
+              if(org[columns].toLowerCase().indexOf(searchStringArr[i].toLowerCase()) !== -1){
+                return true;
+              }
+            }
+            return false;
           });
         }else {
           var columns = columns.split(',');
           return $.grep(organizationData, function(org) {
-
             //Don't use foreach here - return statement won't cause grep callback to return
             for(var i = 0; i < columns.length; i = i + 1) {
-              if(org[columns[i]].toLowerCase().indexOf(searchString.toLowerCase()) !== -1){
-                return true;
+              for(var j = 0; j < searchStringArr.length; j = j + 1) {
+                if(org[columns[i]].toLowerCase().indexOf(searchStringArr[j].toLowerCase()) !== -1){
+                  return true;
+                }
               }
             }
-
             return false;
           });
         }
       }
 
       function addBubbles(orgs){
-        organizationBubbleData = [];
-      
+        var organizationBubbleData = [];
+
         orgs.forEach(function(organization){
           organizationBubbleData.push({
-            name: organization.organization,
-            primarycontact: organization.primarycontact,
-            url: organization.url,
-            mission: organization.mission,
-            radius: 15,
-            yeild: 100,
+            name: organization['Organization Name'],
+            city: organization['City'],
+            state: organization['State'],
+            contactname: organization['Contact Name'],
+            contactemail: organization['Contact Email Address'],
+            website: organization['Organization Website'],
+            radius: 10,
+            yield: 100,
             country: 'USA',
-            fillKey: 'redColor',
-            latitude: organization.latitude,
-            longitude: organization.longitude
+            fillKey: 'blueColor',
+            latitude: organization['Latitude'],
+            longitude: organization['Longitude']
           });
         });
 
@@ -283,7 +284,14 @@
           borderColor: '#FFFFFF',
           popupOnHover: true,
           popupTemplate: function(geography, data) {
-            return '<div class="bubble-info">' + '<strong>' + data.name + '</strong>' + '<br>' + data.primarycontact + '<br>' + data.url + '<br>' + data.mission + '</div>';
+            return ['<div class="bubble-info">',
+                      '<strong>' + data.name + '</strong>',
+                      '<br/>' + data.city + ', ' + data.state,
+                      // '<br/>' + data.contactname,
+                      // '<br/>' + data.contactemail,
+                      // '<br/>' + data.website,
+                    '</div>'].join('');
+
           },
           fillOpacity: 0.75,
           highlightOnHover: true,
@@ -294,7 +302,7 @@
         });
       }
 
-      function populateOrganizationsInList(orgs){
+      function populateOrganizationsInList(orgs, callback){
         $.get('templates/organization-template.html', function(template){
           var allOrgs = "";
 
@@ -302,53 +310,18 @@
             allOrgs = '<div class="no-results">0 Results</div>';
           }else {
             orgs.forEach(function(organization){
-              organization.displayTags = organization.tags.split(',');
+              organization.displayTags = organization['Issue Categories'].split(',');
               allOrgs += Mustache.render(template, organization);
             });
           }
           $('#all-organizations').html(allOrgs);
           $('#organization-count').html(orgs.length + ' Results');
+          if(typeof callback === 'function'){
+            callback();
+          }
         });
-      }
-
-      function createPieChart(data, selector){
-        var chart = new CanvasJS.Chart(selector,
-        {
-          animationEnabled: true,
-          legend:{
-            verticalAlign: "bottom",
-            horizontalAlign: "center",
-            fontSize: 12,
-            fontFamily: "Open Sans",
-            fontColor: '#686868'        
-          },
-          toolTip:{
-            enabled: false, //enable here
-          },
-          theme: "theme1",
-          data: [{        
-            type: "pie",       
-            indexLabelFontFamily: "Open Sans",       
-            indexLabelFontSize: 11,
-            indexLabelFontWeight: "normal",
-            indexLabel: "{label} ${y}",
-            startAngle:-20,      
-            showInLegend: true,
-            dataPoints: data
-          }]
-        });
-        chart.render();
-      }
-
-      function convertToDollars(num){
-        num = parseInt(num, 10);
-        var p = num.toFixed(2).split(".");
-        return "$" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
-            return  num + (i && !(i % 3) ? "," : "") + acc;
-        }, "");
       }
     })();
-
   </script>
 </body>
 </html>
