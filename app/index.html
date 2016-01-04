@@ -130,7 +130,9 @@
       'use strict'
 
       var organization_map,
-        organizationData;
+        organizationData,
+        filteredData,
+        searchBar = $('#search-bar');
 
       //Initialization
       (function(){
@@ -152,7 +154,7 @@
           element: document.getElementById('organization_map'),
           done: function(datamap) {
               datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
-                var found = filterOrganizations(geography.id, 'State');
+                var found = filterOrganizations(geography.id, 'State', filteredData);
                 populateOrganizationsInList(found);
                 addBubbles(found);
               });
@@ -174,13 +176,26 @@
         organizationData = data.Organizations.elements;
         addBubbles(organizationData);
         populateOrganizationsInList(organizationData);
+        filteredData = organizationData;
       }
 
-      function setTagClickHandler(){
-        $(document).on('click','span.tag', function(){
-          var tagName = $(this).html();
-          var found = filterOrganizations(tagName,'Issue Categories');
-          populateOrganizationsInList(found);
+      function initSearchBox(){
+        var timeoutId;
+
+        //Keyup event vs keypress - keyup captures delete key
+        searchBar.on('keyup', function(){
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(function(){
+            runSearch();
+          }, 500);
+        });
+      }
+
+      function runSearch(){
+        var searchString = searchBar.val();
+        var found = filterOrganizations(searchString, 'Organization Name,City,State,Contact Name,Contact Email Address,Organization Website,Current Campaigns,Recent Accomplishments,Issue Categories', filteredData);
+        populateOrganizationsInList(found, function(){
+          $('#all-organizations .label-content').highlight(searchString);
           addBubbles(found);
         });
       }
@@ -194,27 +209,17 @@
             }
           });
 
-          var found = filterOrganizations(issueCategoriesToFilterBy,'Issue Categories');
-          populateOrganizationsInList(found);
-          addBubbles(found);
+          filteredData = filterOrganizations(issueCategoriesToFilterBy,'Issue Categories', organizationData);
+          runSearch();
         });
       }
 
-      function initSearchBox(){
-        var timeoutId,
-            searchBar = $('#search-bar');
-
-        //Keyup event vs keypress - keyup captures delete key
-        searchBar.on('keyup', function(){
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(function(){
-            var searchString = searchBar.val(),
-              found = filterOrganizations(searchString, 'Organization Name,City,State,Contact Name,Contact Email Address,Organization Website,Current Campaigns,Recent Accomplishments,Issue Categories');
-            populateOrganizationsInList(found, function(){
-              $('#all-organizations .label-content').highlight(searchString);
-              addBubbles(found);
-            });
-          }, 500);
+      function setTagClickHandler(){
+        $(document).on('click','span.tag', function(){
+          var tagName = $(this).html();
+          var found = filterOrganizations(tagName,'Issue Categories');
+          populateOrganizationsInList(found);
+          addBubbles(found);
         });
       }
 
@@ -222,7 +227,7 @@
        * SearchString can be a string or an array of strings
        * Columns is a comma seperated list of columns that we want the search to include
        */
-      function filterOrganizations(searchString, columns){
+      function filterOrganizations(searchString, columns, dataSet){
         var searchStringArr = [];
 
         if(Object.prototype.toString.call(searchString) === '[object String]'){
@@ -235,7 +240,7 @@
 
         //Searching only a single column
         if(columns.indexOf(',') === -1) {
-          return $.grep(organizationData, function(org) {
+          return $.grep(dataSet, function(org) {
             for(var i = 0; i < searchStringArr.length; i = i + 1) {
               if(org[columns].toLowerCase().indexOf(searchStringArr[i].toLowerCase()) !== -1){
                 return true;
@@ -245,7 +250,7 @@
           });
         }else {
           var columns = columns.split(',');
-          return $.grep(organizationData, function(org) {
+          return $.grep(dataSet, function(org) {
             //Don't use foreach here - return statement won't cause grep callback to return
             for(var i = 0; i < columns.length; i = i + 1) {
               for(var j = 0; j < searchStringArr.length; j = j + 1) {
