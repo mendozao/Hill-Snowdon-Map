@@ -1,16 +1,24 @@
 body {
     font-family: 'Open Sans', sans-serif;
     color: #686868;
-    /*background: #EDE6DC;*/
 }
 
 a {
-    color: #00aaad;
+    color: #4AD1E5;
+}
+
+h1 {
+  font-family: 'Helvetica Neue';
+  font-weight: 100;
 }
 
 text {
     color: #FFFFFF !important;
     font-family: 'Open Sans', sans-serif;
+}
+
+hr {
+    border-top: 1px solid #DFDFDF;
 }
 
 .org-hr {
@@ -22,9 +30,9 @@ text {
 }
 
 .navbar {
-    background-color: #759F57;
+    background-color: #6DC8C8;
     border:0;
-    height: 16px;
+    height: 8px;
     min-height: 0px;
     margin-bottom: 0;
 }
@@ -75,7 +83,7 @@ text {
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 16px; /* Should match the height of the navbar */
+    top: 8px; /* Should match the height of the navbar */
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -112,18 +120,6 @@ text {
   margin-top: 0;
 }
 
-/*.main-content {
-    padding-top: 80px;
-}*/
-
-.main-content h1 {
-    text-align: center;
-}
-
-.sub-paragraph {
-    font-size: 12px;
-}
-
 .copyright {
     text-align: center;
 }
@@ -134,7 +130,7 @@ text {
 }
 
 .bottom-information {
-    margin: 200px 0 0 0;
+    margin: 40px 0 0 0;
 }
 
 .organization-information-container {
@@ -147,11 +143,11 @@ text {
 
 .tag {
     padding: 1px 4px;
-    background: #759F57;
+    background: #99A3A3;
     color: #FFFFFF;
-    margin: 0 2px 0 0;
+    margin: 1px;
     border-radius: 3px;
-    cursor: pointer;
+    display: inline-block;
 }
 
 .no-results {
@@ -163,7 +159,7 @@ text {
 
 .map {
     width: 100%;
-    height: 550px;
+    height: 100%;
 }
 
 .bubble-info {
@@ -221,4 +217,36 @@ text {
 .highlight {
   /*border-bottom: 1px solid red;*/
   background: #FFF79B;
+}
+
+
+/* Leaflet */
+.info {
+	padding: 6px 8px;
+	font: 14px/16px Arial, Helvetica, sans-serif;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+}
+.info h4 {
+	margin: 0 0 5px;
+	color: #777;
+}
+
+.legend {
+	text-align: left;
+	line-height: 18px;
+	color: #555;
+}
+.legend i {
+	width: 18px;
+	height: 18px;
+	float: left;
+	margin-right: 8px;
+	opacity: 0.7;
+}
+
+.leaflet-control-attribution {
+  display: none;
 }

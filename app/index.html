@@ -8,17 +8,7 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,700,800' rel='stylesheet' type='text/css'>
   <link href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
-
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
-  <script type="text/javascript" src="js/mustache.js"></script>
-  <script type="text/javascript" src="js/tabletop.js"></script>
-  <script type="text/javascript" src="js/sheetsee.js"></script>
-  <script type="text/javascript" src="js/datamaps.js"></script>
-  <script type="text/javascript" src="js/highlight.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/leaflet/leaflet.css">
 </head>
 <body>
 
@@ -57,44 +47,20 @@
         </div>
 
         <div class="row">
+          Filter By Keyword
           <input type="text" class="form-control" placeholder="Search" id="search-bar">
+
+          <br>
+          Filter By State
+          <select class="form-control" id="state-dropdown">
+            <option value="">Select a State</option>
+          </select>
+
           <br>
           Filter By Issue Categories
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="Criminalization" checked> Criminalization
-            </label>
+          <div id="issue-categories">
           </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="Economic Justice/Employment" checked> Economic Justice/Employment
-            </label>
-          </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="Education" checked> Education
-            </label>
-          </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="Affordable Housing/Anti-Gentrification" checked> Affordable Housing/Anti-Gentrification
-            </label>
-          </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="Civic Engagement" checked> Civic Engagement
-            </label>
-          </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="Other" checked> Other
-            </label>
-          </div>
+          <a href="javascript:void(0)" id="reset-search" style="font-size:12px;">Reset Search</a>
           <hr>
         </div>
 
@@ -106,7 +72,7 @@
 
       <!-- Main content -->
       <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main">
-        <h1 class="page-header text-center">Hill-Snowdon Foundation Map</h1>
+        <h1 class="page-header text-center">Hill-Snowdon Foundation</h1>
         <div id="organization_map" class="map">
         </div>
 
@@ -124,209 +90,20 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-
-    (function(){
-      'use strict'
-
-      var organization_map,
-        organizationData,
-        filteredData,
-        searchBar = $('#search-bar');
-
-      //Initialization
-      (function(){
-        fetchSpreadsheetData();
-        initMap();
-        initSearchBox();
-        setCheckboxChangeHandler();
-        setTagClickHandler();
-      })();
-
-      function fetchSpreadsheetData(){
-        var URL = "15-iDz53TuM_GwiU9jvekqpYgIlTd_kIMnVZqFKhEHCE"
-        Tabletop.init( { key: URL, callback: didReceiveSpreadsheetData, simpleSheet: false, prettyColumnNames: true } )
-      }
-
-      function initMap(){
-        organization_map = new Datamap({
-          scope: 'usa',
-          element: document.getElementById('organization_map'),
-          done: function(datamap) {
-              datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
-                var found = filterOrganizations(geography.id, 'State', filteredData);
-                populateOrganizationsInList(found);
-                addBubbles(found);
-              });
-          },
-          geographyConfig: {
-            highlightFillColor: '#CFCFCF',
-            highlightBorderColor: '#FFFFFF',
-            highlightBorderWidth: 2
-          },
-          fills: {
-            blueColor: '#00aaad',
-            defaultFill: '#ECECEC'
-          }
-        });
-        organization_map.labels();
-      }
-
-      function didReceiveSpreadsheetData(data) {
-        organizationData = data.Organizations.elements;
-        addBubbles(organizationData);
-        populateOrganizationsInList(organizationData);
-        filteredData = organizationData;
-      }
-
-      function initSearchBox(){
-        var timeoutId;
-
-        //Keyup event vs keypress - keyup captures delete key
-        searchBar.on('keyup', function(){
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(function(){
-            runSearch();
-          }, 500);
-        });
-      }
-
-      function runSearch(){
-        var searchString = searchBar.val();
-        var found = filterOrganizations(searchString, 'Organization Name,City,State,Contact Name,Contact Email Address,Organization Website,Current Campaigns,Recent Accomplishments,Issue Categories', filteredData);
-        populateOrganizationsInList(found, function(){
-          $('#all-organizations .label-content').highlight(searchString);
-          addBubbles(found);
-        });
-      }
-
-      function setCheckboxChangeHandler(){
-        $('input[type="checkbox"]').change(function() {
-          var issueCategoriesToFilterBy = [];
-          $('input[type="checkbox"]').each(function(i, elem){
-            if(elem.checked) {
-              issueCategoriesToFilterBy.push(elem.value);
-            }
-          });
-
-          filteredData = filterOrganizations(issueCategoriesToFilterBy,'Issue Categories', organizationData);
-          runSearch();
-        });
-      }
-
-      function setTagClickHandler(){
-        $(document).on('click','span.tag', function(){
-          var tagName = $(this).html();
-          var found = filterOrganizations(tagName,'Issue Categories');
-          populateOrganizationsInList(found);
-          addBubbles(found);
-        });
-      }
-
-      /**
-       * SearchString can be a string or an array of strings
-       * Columns is a comma seperated list of columns that we want the search to include
-       */
-      function filterOrganizations(searchString, columns, dataSet){
-        var searchStringArr = [];
-
-        if(Object.prototype.toString.call(searchString) === '[object String]'){
-          searchStringArr.push(searchString);
-        }else if(Object.prototype.toString.call(searchString) === '[object Array]'){
-          searchStringArr = searchString;
-        }else {
-          throw new Error('filterOrganizations expects either a string or an array');
-        }
-
-        //Searching only a single column
-        if(columns.indexOf(',') === -1) {
-          return $.grep(dataSet, function(org) {
-            for(var i = 0; i < searchStringArr.length; i = i + 1) {
-              if(org[columns].toLowerCase().indexOf(searchStringArr[i].toLowerCase()) !== -1){
-                return true;
-              }
-            }
-            return false;
-          });
-        }else {
-          var columns = columns.split(',');
-          return $.grep(dataSet, function(org) {
-            //Don't use foreach here - return statement won't cause grep callback to return
-            for(var i = 0; i < columns.length; i = i + 1) {
-              for(var j = 0; j < searchStringArr.length; j = j + 1) {
-                if(org[columns[i]].toLowerCase().indexOf(searchStringArr[j].toLowerCase()) !== -1){
-                  return true;
-                }
-              }
-            }
-            return false;
-          });
-        }
-      }
-
-      function addBubbles(orgs){
-        var organizationBubbleData = [];
-
-        orgs.forEach(function(organization){
-          organizationBubbleData.push({
-            name: organization['Organization Name'],
-            city: organization['City'],
-            state: organization['State'],
-            contactname: organization['Contact Name'],
-            contactemail: organization['Contact Email Address'],
-            website: organization['Organization Website'],
-            radius: 10,
-            yield: 100,
-            country: 'USA',
-            fillKey: 'blueColor',
-            latitude: organization['Latitude'],
-            longitude: organization['Longitude']
-          });
-        });
-
-        organization_map.bubbles(organizationBubbleData, {
-          borderWidth: 1,
-          borderColor: '#FFFFFF',
-          popupOnHover: true,
-          popupTemplate: function(geography, data) {
-            return ['<div class="bubble-info">',
-                      '<strong>' + data.name + '</strong>',
-                      '<br/>' + data.city + ', ' + data.state,
-                      // '<br/>' + data.contactname,
-                      // '<br/>' + data.contactemail,
-                      // '<br/>' + data.website,
-                    '</div>'].join('');
-
-          },
-          fillOpacity: 0.75,
-          highlightOnHover: true,
-          highlightFillColor: '#CE2C2C',
-          highlightBorderColor: 'rgba(255, 255, 255, 0.2)',
-          highlightBorderWidth: 2,
-          highlightFillOpacity: 0.85
-        });
-      }
-
-      function populateOrganizationsInList(orgs, callback){
-        $.get('templates/organization-template.html', function(template){
-          var allOrgs = "";
-
-          if(orgs.length === 0) {
-            allOrgs = '<div class="no-results">0 Results</div>';
-          }else {
-            orgs.forEach(function(organization){
-              organization.displayTags = organization['Issue Categories'].split(',');
-              allOrgs += Mustache.render(template, organization);
-            });
-          }
-          $('#all-organizations').html(allOrgs);
-          $('#organization-count').html(orgs.length + ' Results');
-          if(typeof callback === 'function'){
-            callback();
-          }
-        });
-      }
-    })();
-  </script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
+  <script type="text/javascript" src="js/mustache.js"></script>
+  <script type="text/javascript" src="js/tabletop.js"></script>
+  <script type="text/javascript" src="js/sheetsee.js"></script>
+  <script type="text/javascript" src="js/datamaps.js"></script>
+  <script type="text/javascript" src="js/highlight.js"></script>
+  <script type="text/javascript" src="js/leaflet/leaflet-src.js"></script>
+  <script type="text/javascript" src="js/leaflet/us-states.js"></script>
+  <script type="text/javascript" src="js/state-abbreviations.js"></script>
+  <script type="text/javascript" src="js/issue-categories.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
