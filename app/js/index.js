@@ -264,7 +264,6 @@
         marker.closePopup();
       });
 
-      debugger;
       markersLayer.addLayer(marker);
       organization_map.addLayer(markersLayer);
     });
