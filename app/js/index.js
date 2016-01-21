@@ -155,6 +155,7 @@
       elem.checked = true;
     });
     updateUI();
+    organization_map.setView([27.8, -96], 4)
   }
 
   function setSearchBoxHandler(){
