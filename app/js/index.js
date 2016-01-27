@@ -8,6 +8,7 @@
     resetLink = $('#reset-search'),
     searchBar = $('#search-bar'),
     stateDropdown = $('#state-dropdown'),
+    issueCategoryDropdown = $('#issue-categories'),
     searchState = {
       searchTextInput: {
         searchTerms: [],
@@ -17,7 +18,7 @@
         searchTerms: [],
         columns: 'State'
       },
-      issueCategoriesCheckboxes: {
+      issueCategoryDropdown: {
         searchTerms: [],
         columns: 'Issue Categories'
       }
@@ -47,10 +48,8 @@
   }
 
   function populateIssueCategories(){
-    var issueCategories = $('#issue-categories');
     window.issueCategories.forEach(function(elem, i){
-      searchState.issueCategoriesCheckboxes.searchTerms.push(elem);
-      issueCategories.append('<div class="checkbox"><label><input type="checkbox" value="' + elem + '" checked>' + elem + '</label></div>');
+      issueCategoryDropdown.append($("<option />").val(elem).text(elem));
     });
   }
 
@@ -126,9 +125,8 @@
   }
 
   function updateUI(){
-    var searchObjectArray = [searchState.searchTextInput, searchState.stateDropdown, searchState.issueCategoriesCheckboxes];
+    var searchObjectArray = [searchState.searchTextInput, searchState.stateDropdown, searchState.issueCategoryDropdown];
     var found = filterOrganizations(searchObjectArray, organizationData);
-    console.log(found);
 
     populateOrganizationsInList(found, function(){
       $('#all-organizations .label-content').highlight(searchState.searchTextInput.searchTerms[0]);
@@ -145,15 +143,11 @@
   function resetSearch(){
     searchState.searchTextInput.searchTerms = [];
     searchState.stateDropdown.searchTerms = [];
-    searchState.issueCategoriesCheckboxes.searchTerms = [];
-    window.issueCategories.forEach(function(elem, i){
-      searchState.issueCategoriesCheckboxes.searchTerms.push(elem);
-    });
+    searchState.issueCategoryDropdown.searchTerms = [];
+
     searchBar.val('');
     stateDropdown.val('');
-    $('input[type="checkbox"]').each(function(i, elem){
-      elem.checked = true;
-    });
+    issueCategoryDropdown.val('');
     updateUI();
     organization_map.setView([27.8, -96], 4)
   }
@@ -179,14 +173,8 @@
   }
 
   function setCheckboxChangeHandler(){
-    $('input[type="checkbox"]').change(function() {
-      var issueCategoriesToFilterBy = [];
-      $('input[type="checkbox"]').each(function(i, elem){
-        if(elem.checked) {
-          issueCategoriesToFilterBy.push(elem.value);
-        }
-      });
-      searchState.issueCategoriesCheckboxes.searchTerms = issueCategoriesToFilterBy;
+    issueCategoryDropdown.on('change', function() {
+      searchState.issueCategoryDropdown.searchTerms[0] = this.value;
       updateUI();
     });
   }
@@ -221,9 +209,7 @@
         var columns = searchObjectArray[i].columns.split(',');
         var breakCheck = false;
 
-        if(searchTerms.length === 0 && i === 2){
-          booleans.push(false);
-        }else if(searchTerms.length === 0){
+        if(searchTerms.length === 0){
           booleans.push(true);
         }else {
           for(var j = 0; j < columns.length; j = j + 1) {

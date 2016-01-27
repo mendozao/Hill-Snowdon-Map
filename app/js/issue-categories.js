@@ -4,5 +4,8 @@ window.issueCategories = [
   "Education",
   "Affordable Housing/Anti-Gentrification",
   "Civic Engagement",
-  "Other"
+  "Health/Healthcare",
+  "Gender Justice/Women",
+  "LGBTQ",
+  "Environment"
 ]

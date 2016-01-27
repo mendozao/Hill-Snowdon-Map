@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Hill-Snowdon Foundation Map</title>
+  <title>Black-Led Organizing Map</title>
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width, initial-scale=1">
 
@@ -37,7 +37,46 @@
     <div class="row">
       <!-- Main content -->
       <div class="col-sm-9 col-md-9 main">
-        <h1 class="page-header text-center">Hill-Snowdon Foundation</h1>
+        <h1 class="page-header text-center">Black-Led Organizing Map</h1>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="organization-header">
+              <span id="organization-title">Organizations (<a href="https://docs.google.com/spreadsheets/d/15-iDz53TuM_GwiU9jvekqpYgIlTd_kIMnVZqFKhEHCE/edit?usp=sharing" target="_blank">Spreadsheet</a>) </span>
+              <span id="organization-count"></span>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-6">
+            Filter By Primary Issue Category
+            <select class="form-control" id="issue-categories">
+              <option value="">Select an Issue</option>
+            </select>
+
+            <br>
+            Filter By State
+            <select class="form-control" id="state-dropdown">
+              <option value="">Select a State</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            Filter By Keyword
+            <input type="text" class="form-control" placeholder="Search" id="search-bar">
+            <span class="help-text">(e.g., organization name; other issues – transportation, immigration, foster care, etc.)</span>
+
+            <br><br>
+
+            <a href="javascript:void(0)" id="reset-search" style="font-size:12px;">Reset Search</a>
+          </div>
+        </div>
+
+        <br>
+
         <div id="organization_map" class="map">
         </div>
 
@@ -55,32 +94,7 @@
       <!-- Sidebar -->
       <div class="col-sm-3 col-md-3 sidebar">
         <div class="row">
-          <div class="organization-header">
-            <span id="organization-title">Organizations (<a href="https://docs.google.com/spreadsheets/d/15-iDz53TuM_GwiU9jvekqpYgIlTd_kIMnVZqFKhEHCE/edit?usp=sharing" target="_blank">Spreadsheet</a>) </span>
-            <span id="organization-count"></span>
-          </div>
-          <br>
-        </div>
-
-        <div class="row">
-          Filter By Keyword
-          <input type="text" class="form-control" placeholder="Search" id="search-bar">
-
-          <br>
-          Filter By State
-          <select class="form-control" id="state-dropdown">
-            <option value="">Select a State</option>
-          </select>
-
-          <br>
-          Filter By Issue Categories
-          <div id="issue-categories">
-          </div>
-          <a href="javascript:void(0)" id="reset-search" style="font-size:12px;">Reset Search</a>
-          <hr>
-        </div>
-
-        <div class="row">
+          <h4>Search Results</h4>
           <div class="organization-information-container" id="all-organizations">
           </div>
         </div>
