@@ -7,6 +7,6 @@ window.issueCategories = [
   "Environment",
   "Gender Justice/Women",
   "Health/Healthcare",
-  "Intermediary",
-  "LGBTQ"
+  "LGBTQ",
+  "Intermediary"
 ]
