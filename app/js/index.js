@@ -20,7 +20,7 @@
       },
       issueCategoryDropdown: {
         searchTerms: [],
-        columns: 'Issue Categories'
+        columns: 'Primary Issue'
       }
     };
 
@@ -60,7 +60,7 @@
 
     organization_map = map;
 
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWVuZG96YW8iLCJhIjoiY2lrYmZvcXdyMGx3ZXV5bTR3eHprcnJ2OSJ9.sQB96k4p_kJQMCiCgC_XkA', {
       maxZoom: 18,
       id: 'mapbox.streets'
     }).addTo(map);

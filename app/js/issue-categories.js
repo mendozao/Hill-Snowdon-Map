@@ -1,11 +1,12 @@
 window.issueCategories = [
+  "Affordable Housing/Anti-Gentrification",
+  "Civic Engagement",
   "Criminalization",
   "Economic Justice/Employment",
   "Education",
-  "Affordable Housing/Anti-Gentrification",
-  "Civic Engagement",
-  "Health/Healthcare",
+  "Environment",
   "Gender Justice/Women",
-  "LGBTQ",
-  "Environment"
+  "Health/Healthcare",
+  "Intermediary",
+  "LGBTQ"
 ]
