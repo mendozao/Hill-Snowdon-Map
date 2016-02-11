@@ -197,7 +197,8 @@ hr {
 }
 
 .organization-information-container {
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .organization-information-block {
