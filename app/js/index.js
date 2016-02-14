@@ -20,7 +20,7 @@
       },
       issueCategoryDropdown: {
         searchTerms: [],
-        columns: 'Primary Issue'
+        columns: 'Key Issue'
       }
     };
 
@@ -54,7 +54,7 @@
   }
 
   function initMap(){
-    var map = L.map('organization_map').setView([27.8, -96], 4);
+    var map = L.map('organization_map').setView([38, -96], 4);
 
     map.scrollWheelZoom.disable();
 
