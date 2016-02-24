@@ -4,7 +4,12 @@ body {
 }
 
 a {
-    color: #4AD1E5;
+    color: #5A29E3;
+}
+
+a:hover {
+  color: #30147C;
+  text-decoration: none;
 }
 
 h1 {
