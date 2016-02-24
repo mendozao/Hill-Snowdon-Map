@@ -4,6 +4,7 @@
   var organization_map,
     organizationData,
     filteredData,
+    issueCategories,
     markersLayer,
     resetLink = $('#reset-search'),
     searchBar = $('#search-bar'),
@@ -12,15 +13,15 @@
     searchState = {
       searchTextInput: {
         searchTerms: [],
-        columns: 'Organization Name,City,State,Contact Name,Contact Email Address,Organization Website,Current Campaigns,Recent Accomplishments,Issue Categories'
+        columns: 'Organization Name,City,State/Region,Contact Name,Contact Email Address,Organization Website,Current Campaigns,Recent Accomplishments,Key Issues,Other Issues'
       },
       stateDropdown: {
         searchTerms: [],
-        columns: 'State'
+        columns: 'State/Region'
       },
       issueCategoryDropdown: {
         searchTerms: [],
-        columns: 'Key Issue'
+        columns: 'Key Issues'
       }
     };
 
@@ -28,7 +29,6 @@
   (function(){
     fetchSpreadsheetData();
     populateStateDropdown();
-    populateIssueCategories();
     initMap();
     setResetClickHandler();
     setSearchBoxHandler();
@@ -48,7 +48,7 @@
   }
 
   function populateIssueCategories(){
-    window.issueCategories.forEach(function(elem, i){
+    issueCategories.forEach(function(elem, i){
       issueCategoryDropdown.append($("<option />").val(elem).text(elem));
     });
   }
@@ -118,10 +118,13 @@
   }
 
   function didReceiveSpreadsheetData(data) {
+    issueCategories = data.Organizations.column_names.slice(17,28);
     organizationData = data.Organizations.elements;
     addBubbles(organizationData);
     populateOrganizationsInList(organizationData);
     filteredData = organizationData;
+
+    populateIssueCategories();
   }
 
   function updateUI(){
@@ -244,7 +247,7 @@
       var marker = L.marker([ organization['Latitude'], organization['Longitude']]);
 
       marker.on('mouseover', function(){
-        marker.bindPopup('<b>' + organization['Organization Name'] + '</b><br>' + organization['City'] + ', ' + organization['State'] + '<br>' + organization['Contact Name'] + '<br>' + organization['Organization Website'] ).openPopup();
+        marker.bindPopup('<b>' + organization['Organization Name'] + '</b><br>' + organization['City'] + ', ' + organization['State/Region'] + '<br>' + organization['Contact Name'] + '<br>' + organization['Organization Website'] ).openPopup();
       });
 
       marker.on('mouseout', function(){
@@ -264,7 +267,8 @@
         allOrgs = '<div class="no-results">0 Results</div>';
       }else {
         orgs.forEach(function(organization){
-          organization.displayTags = organization['Issue Categories'].split(',');
+          organization.keyIssues = organization['Key Issues'].split(',');
+          organization.otherIssues = organization['Other Issues'].split(',');
           allOrgs += Mustache.render(template, organization);
         });
       }

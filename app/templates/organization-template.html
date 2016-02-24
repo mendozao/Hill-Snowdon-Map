@@ -16,7 +16,7 @@
   <div class="label-block">
     <span class="label-title">State</span>
     <div class="label-content">
-      {{State}}
+      {{State/Region}}
     </div>
   </div>
 
@@ -57,16 +57,16 @@
   </div>
 
   <div class="label-block">
-    <span class="label-title">Key Issue</span>
+    <span class="label-title">Key Issues</span>
     <div class="label-content">
-      <span class="tag">{{Key Issue}}</span>
+      {{#keyIssues}}<span class="tag">{{.}}</span>{{/keyIssues}}
     </div>
   </div>
 
   <div class="label-block">
     <span class="label-title">Other Issues</span>
     <div class="label-content">
-      {{#displayTags}}<span class="tag">{{.}}</span>{{/displayTags}}
+      {{#otherIssues}}<span class="tag">{{.}}</span>{{/otherIssues}}
     </div>
   </div>
 </div>
