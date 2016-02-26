@@ -244,7 +244,20 @@
     markersLayer.clearLayers();
 
     orgs.forEach(function(organization){
-      var marker = L.marker([ organization['Latitude'], organization['Longitude']]);
+
+      var myIcon = L.icon({
+          iconUrl: '/js/leaflet/images/blue-marker.png',
+          iconRetinaUrl: '/js/leaflet/images/blue-marker-2x.png',
+          iconSize: [15, 31],
+          iconAnchor: [7, 31],
+          popupAnchor: [0, -26],
+          shadowUrl: '/js/leaflet/images/blue-marker-shadow.png',
+          shadowRetinaUrl: '/js/leaflet/images/blue-marker-2x-shadow.png',
+          shadowSize: [15, 14],
+          shadowAnchor: [0, 14]
+      });
+
+      var marker = L.marker([ organization['Latitude'], organization['Longitude']], {icon: myIcon});
 
       marker.on('mouseover', function(){
         marker.bindPopup('<b>' + organization['Organization Name'] + '</b><br>' + organization['City'] + ', ' + organization['State/Region'] + '<br>' + organization['Contact Name'] + '<br>' + organization['Organization Website'] ).openPopup();
