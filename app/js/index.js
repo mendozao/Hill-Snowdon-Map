@@ -246,13 +246,13 @@
     orgs.forEach(function(organization){
 
       var myIcon = L.icon({
-          iconUrl: '/js/leaflet/images/blue-marker.png',
-          iconRetinaUrl: '/js/leaflet/images/blue-marker-2x.png',
+          iconUrl: 'js/leaflet/images/blue-marker.png',
+          iconRetinaUrl: 'js/leaflet/images/blue-marker-2x.png',
           iconSize: [15, 31],
           iconAnchor: [7, 31],
           popupAnchor: [0, -26],
-          shadowUrl: '/js/leaflet/images/blue-marker-shadow.png',
-          shadowRetinaUrl: '/js/leaflet/images/blue-marker-2x-shadow.png',
+          shadowUrl: 'js/leaflet/images/blue-marker-shadow.png',
+          shadowRetinaUrl: 'js/leaflet/images/blue-marker-2x-shadow.png',
           shadowSize: [15, 14],
           shadowAnchor: [0, 14]
       });
